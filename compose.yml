@@ -1,0 +1,10 @@
+name: "symmetric"
+
+services:
+  app:
+    build: .
+    working_dir: /app
+    tty: true
+    volumes:
+      - .:/app
+    network_mode: host
