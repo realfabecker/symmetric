@@ -28,14 +28,16 @@ function decrypt({encrypted, alg, key}) {
 try {
     const e = encrypt({text: "text to be encrypted (nodejs)", ...config})
     console.log(`Encrypted: ${e}`)
+    fs.writeFileSync(path.join(config.res, `${config.alg}_js.txt`), e);
 
     const d = decrypt({encrypted: e, ...config})
     console.log(`Decrypted: ${d}`)
-    fs.writeFileSync(path.join(config.res, "secret_js.txt"), e);
 
-    const encrypted = fs.readFileSync(path.join(config.res, "secret_php.txt"), "utf8")
-    const decrypted = decrypt({encrypted, ...config})
-    console.log(`Decrypted: ${decrypted}`)
+    if (fs.existsSync(path.join(config.res, `${config.alg}_php.txt`))) {
+        const encrypted = fs.readFileSync(path.join(config.res, `${config.alg}_php.txt`), "utf8")
+        const decrypted = decrypt({encrypted, ...config})
+        console.log(`Decrypted: ${decrypted}`)
+    }
 } catch (e) {
     console.log(e)
 }

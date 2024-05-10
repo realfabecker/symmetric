@@ -23,7 +23,7 @@ function decrypt(array $params)
     return openssl_decrypt($ciphertext, $params['alg'], $params["key"], OPENSSL_RAW_DATA, $iv);
 }
 
-try {    
+try {
     $config = [
         'alg' => 'aes-128-ctr',
         'key' => 'lbwyBzfgzUIvXZFShJuikaWvLJhIVq36',
@@ -36,22 +36,24 @@ try {
         "text" => "text to be encrypted (php)"
     ]);
     echo "Encrypted: $encrypted" . PHP_EOL;
+    file_put_contents($config['res'] . DIRECTORY_SEPARATOR . $config['alg'] . "_php.txt", $encrypted);
 
     $decrypted = decrypt([
         "alg" => $config['alg'],
         "key" => $config['key'],
         "ciphered" => $encrypted
-    ]);    
-    echo "Decrypted: $decrypted" . PHP_EOL;    
-    file_put_contents($config['res'] . DIRECTORY_SEPARATOR . "secret_php.txt", $encrypted);
-
-    $encrypted = file_get_contents($config['res'] . DIRECTORY_SEPARATOR . "secret_js.txt");
-    $decrypted = decrypt([
-        "alg" => $config['alg'], 
-        "key" => $config['key'], 
-        "ciphered" => $encrypted
     ]);
     echo "Decrypted: $decrypted" . PHP_EOL;
+
+    if (is_file($config['res'] . DIRECTORY_SEPARATOR . $config['alg'] . "_js.txt")) {
+        $encrypted = file_get_contents($config['res'] . DIRECTORY_SEPARATOR . $config['alg'] . "_js.txt");
+        $decrypted = decrypt([
+            "alg" => $config['alg'],
+            "key" => $config['key'],
+            "ciphered" => $encrypted
+        ]);
+        echo "Decrypted: $decrypted" . PHP_EOL;
+    }
 } catch (\Throwable $e) {
     echo $e->getMessage();
     exit(1);
