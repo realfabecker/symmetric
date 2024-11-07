@@ -14,13 +14,11 @@ const decrypt = new CryptoDecryptWithNodeJS();
 const decryptedText = decrypt.run(encryptedText);
 console.log(`Decrypted: ${decryptedText}`)
 
-const phpEncryptedText = res.read('secrets/aes-128-ctr_php.txt');
-if (phpEncryptedText) {
-    const phpDecryptedText = decrypt.run(phpEncryptedText);
-    console.log(`Decrypted: ${phpDecryptedText}`)
+if(res.exists('secrets/aes-128-ctr_php.txt')){
+    const phpEncryptedText = res.read('secrets/aes-128-ctr_php.txt');
+    if (phpEncryptedText) {
+        const phpDecryptedText = decrypt.run(phpEncryptedText);
+        console.log(`Decrypted: ${phpDecryptedText}`)
+    }
 }
-
-
-
-
 

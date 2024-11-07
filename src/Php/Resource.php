@@ -9,6 +9,12 @@ class Resource
         $res = implode(DIRECTORY_SEPARATOR, [__DIR__, "..", "..", "resources"]);
         return file_get_contents(implode(DIRECTORY_SEPARATOR, [$res, $id]));
     }
+
+    public function exists(string $id)
+    {
+        $res = implode(DIRECTORY_SEPARATOR, [__DIR__, "..", "..", "resources"]);
+        return file_exists(implode(DIRECTORY_SEPARATOR, [$res, $id]));
+    }
     
     public function store(string $id, string $data)
     {
