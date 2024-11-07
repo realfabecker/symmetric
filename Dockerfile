@@ -10,3 +10,5 @@ RUN <<EOF
   echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
   apt-get update && apt-get install nodejs -y
 EOF
+
+COPY --from=composer:2.2 /usr/bin/composer /usr/bin/composer
